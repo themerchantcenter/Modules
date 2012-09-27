@@ -1,0 +1,92 @@
+<html>
+<head>
+<style>
+	body {
+		font-size:12px;
+		font-family:Verdana,Arial;
+		color:#333;
+	}
+	
+	b {
+		color:#222;
+		font-size:1.1em;
+	}
+	li {
+		padding:5px;
+	}
+	li:last-child {
+		padding-bottom:20px;
+	}
+	.very_important {
+		color:#990000;
+	}
+	textarea {
+		display:block;
+		width:80%;
+		padding:5px;
+	}
+</style>
+</head>
+<body>
+<h1>theMerchantCenter Plugin for X-cart</h1>
+<p>Thank you to downloading theMerchantcenter extension. Please follow these instructions to proper installation:</p>
+
+<h2>Preparation</h2>
+<p>For safety reason, please backup all the files, what you going to modify. If struggle, ask professional help.</p>
+<p>Create a language variable <b>lbl_social_activity</b> and put Social Activity as value.
+
+
+<h2>Extension Installation</h2>
+<ul>
+	<li>Copy skin directory content into your skin directory</li>
+	<li>Open <b>/skin/YOURTEMPLATEDIR/customer/home.tpl</b> Put this code above &gt/body&lt
+	<textarea>{include file="modules/TheMerchantCenter/load_script.tpl"}</textarea>
+	As follow:
+	<textarea style='height:100px;border:0;'></div>
+{include file="modules/TheMerchantCenter/load_script.tpl"}
+</body>
+</html>
+	</textarea>
+	</li>
+	<li>Open <b>/skin/YOURTEMPLATEDIR/customer/right_bar.tpl</b>Put <textarea>{include file="modules/TheMerchantCenter/view.tpl" object_action='wish|recommend|follow' width='145' height='240' color_profile='standard' }</textarea>
+	As follow:
+	<textarea style='height:190px;border:0;'>{if not $active_modules.Simple_Mode and $config.General.provider_register eq 'Y' and $config.General.provider_display_backoffice_link eq 'Y'}
+  {include file="customer/menu_provider.tpl"}
+{/if}
+{include file="modules/TheMerchantCenter/view.tpl" object_action='wish|recommend|follow' width='145' height='240' color_profile='standard' }
+	</textarea>
+	</li>
+	<li>Open <b>/skin1/customer/main/product.tpl</b> Put this code 
+	<textarea>{include file="modules/TheMerchantCenter/data.tpl" }
+{include file="modules/TheMerchantCenter/button.tpl" object_action='wish|recommend|follow' show_faces='false' button_arrange='float' layout='box_count' width='400' color_profile='standard'}
+	</textarea>
+	As follow:
+	<textarea style='height:250px;border:0;'></div>
+{if $active_modules.Magnifier and $config.Magnifier.magnifier_image_popup eq 'Y' and $zoomer_images}
+        {include file="modules/Magnifier/popup_magnifier.tpl"}
+      {/if}
+      <br />
+		{include file="modules/TheMerchantCenter/data.tpl" }
+		{include file="modules/TheMerchantCenter/button.tpl" object_action='wish|recommend|follow' show_faces='false' button_arrange='float' layout='box_count' width='400' color_profile='standard'}  
+	</textarea>
+	<li>Open <b>/skin1/customer/main/product_list.tpl</b> Put this code
+	<textarea>{assign var="deeplink" value="`$http_location`/product.php?productid=`$product.productid`"}
+{include file="modules/TheMerchantCenter/button.tpl" deeplink=$deeplink object_action='wish|recommend|follow' show_faces='false'  layout='button_count' width='120' height='46' button_arrange='clear' color_profile='standard' }<br style='clear:both' />
+	</textarea>
+	As follow:
+	<textarea style='height:210px;border:0;'><br style='clear:both' />
+        
+	{if $active_modules.Feature_Comparison}
+		{include file="modules/Feature_Comparison/compare_checkbox.tpl"}
+	{/if}
+	{assign var="deeplink" value="`$http_location`/product.php?productid=`$product.productid`"}
+	{include file="modules/TheMerchantCenter/button.tpl" deeplink=$deeplink object_action='wish|recommend|follow' show_faces='false'  layout='button_count' width='120' height='46' button_arrange='clear' color_profile='standard' }<br style='clear:both' />
+	
+</div>
+	</textarea>
+	<li><b class='very_important'>Flush the Xcart cache call the cleanup.php on your domain root. (http://www.yoursite.co.uk/cleanup.php)</b></li> 
+	<li>Go to the FrontEnd and check one of your products, all the Social Buttons are placed. If doesn't, ask a X-cart Professional. If the shop stop to work, you can easily recover from Backup files.</li>
+  </ul>
+ </body>
+</html>
+ 

@@ -1,0 +1,15 @@
+<?php
+#Slice multi action 	
+$actions =  str_replace(",","|",Mage::getStoreConfig('tmcsocialplugin/socialview_general/action'));
+
+
+?>
+<div class="block block-socialview">
+	<div class="block-title">
+			<strong><span>Social Activity</span></strong>
+	</div>
+	<div class="block-content">
+		<merchantcenter type='view'  obj_action='<?=$actions?>' color_profile='<?=Mage::getStoreConfig('tmcsocialplugin/socialview_general/color') ?>' layout='standard' height='<?=Mage::getStoreConfig('tmcsocialplugin/socialview_general/height')?>' width='<?=Mage::getStoreConfig('tmcsocialplugin/socialview_general/width')?>' lang='en'></merchantcenter>
+	</div>
+</div>
+

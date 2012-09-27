@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <global>
+	    <modules>
+	        <tmcsocialplugin>
+	            <version>1.0</version>
+	        </tmcsocialplugin>
+	    </modules>
+	
+   		<blocks>
+   		    <tmcsocialplugin>
+   		        <class>MC_TMCSocialPlugin_Block</class>
+   		       
+   		    </tmcsocialplugin>
+   		</blocks>
+        
+        <helpers>
+            <tmcsocialplugin>
+                <class>MC_TMCSocialPlugin_Helper</class>
+            </tmcsocialplugin>
+        </helpers>
+    </global>
+	<default>
+        <tmcsocialplugin>
+            <socialbutton_product>
+                <enabled>1</enabled>
+                <layout>box_count</layout>
+                <showfaces>false</showfaces>
+                <width>340</width>
+                <height>80</height>
+                <action>wish|recommend|follow</action>
+                <color>standard</color>
+                <buttonarrange>float</buttonarrange>
+            </socialbutton_product>
+            <socialview_general>
+                <enabled>1</enabled>
+                <width>190</width>
+                <height>400</height>
+                <color>standard</color>
+            </socialview_general>
+        </tmcsocialplugin>
+    </default>
+   
+</config>

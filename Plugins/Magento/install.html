@@ -1,0 +1,119 @@
+<html>
+<head>
+<style>
+	body {
+		font-size:12px;
+		font-family:Verdana,Arial;
+		color:#333;
+	}
+	
+	b {
+		color:#222;
+		font-size:1.1em;
+	}
+	li {
+		padding:5px;
+	}
+	li:last-child {
+		padding-bottom:20px;
+	}
+	.very_important {
+		color:#990000;
+	}
+	textarea {
+		display:block;
+		width:80%;
+		padding:5px;
+	}
+</style>
+</head>
+<body>
+<h1>theMerchantCenter Plugin</h1>
+<p>Thank you to downloading theMerchantcenter extension. Please follow these instructions to proper installation:</p>
+
+<h2>Preparation</h2>
+<p>You able to send coupon codes, message directly to your client. To do this you must add a tmc_message Attribute to all of Your Attribute. <b>If you don't like to send promotion text to your very interested clients, skip this step.</b></p>
+<h3>Create tmc_message Attribute</h3>
+<ul>
+	<li>Navitage to <b>Catalog->Attributes->Manage Attributes</b></li>
+	<li>Click on "Add New Attribute" </li>
+	<li>Set up a new attribute field as follow:
+	<ul>
+		<li>Attribute Code: <b>tmc_message</b></li>
+		<li>Scope: <b>Store view</b></li>
+		<li>Catalog Input type for Store Owner: <b>Text Field</b>
+		<li>Default value: <b></b></li>
+		<li>Unique value: <b>No</b></li>
+		<li>Values Required: <b>No</b></li>
+		<li>Input Validation for Store Owner: <b>None</b></li>
+		<li>Apply To: <b>All Product Types</b></li>
+		<li><b>Do not modify Frontend Properties</b></li>
+		<li>Switch TAB to <b>Manage Label / Options</b></li>
+		<li>Add title in Admin field only: <b>TMC Marketing Message</b></li>
+		<li><b>Click on "Save Attribute"</b></li>
+	</ul>
+	<li>Navigate to <b>Catalog->Attributes->Manage Attribute Sets</b> .Add the new Attribute to <b>ALL of your shop's Attribute Sets</b> (Repeat these steps for each Attribute Sets)
+	<ul>
+		<li>Click on the Attribute Set line</li>
+		<li>Hit "Add new" in the middle coloumn, named <b>Groups</b>
+		<li>Type in The Merchantcenter, Hit OK</li>
+		<li>Find the the New Attribute Group, Find the tmc_message Attribute as well.</li>
+		<li>Click and hold mouse button pushed on tmc_message, and move it into The Merchantcenter Group</li>
+		<li>Save your Attribute Set</li>
+		<li>Repeat these steps on every Attribute Sets</li>
+	</ul>
+</ul>
+<p>Make sure, it works. Go to one of the product in the admin, and check that:
+<ul>
+	<li>There is a TAB named The Merchantcenter
+	<li>There is a text field, what is blank
+</ul>
+If your test failed, please try to find out which step was missed.
+</p>
+
+<h2>Extension Installation</h2>
+<ul>
+	<li>Switch Off Magento cache
+	<ul>
+		<li>Navigate to System->Cache Management;</li>
+		<li>Select all lines;</li>
+		<li>Choose action <b>Disable</b>;</li>
+		<li>Hit Submit</li>
+	</ul>
+	<li>In case you have different then "default" default folder - please change to your template's directory structure<br />(example: <b>app/design/frontend/default/default/template</b> should be <b>app/design/frontend/[packagename]/[themename]/template</b>)
+	<li>Copy all files into your Magento directory</li>
+	<li>The copy process shouldn't overwrite anything, if a prompt come up, please doublecheck the reason, or call Magento professional.</li>
+	<li>Search your <b>catalog.xml</b> file (normaly in app/design/frontend/base/default/layout/catalog.xml)</li>
+	<li><b class='very_important'>Backup the file!</b> Put this code into line 58, as first node of right panel.
+	<textarea><block type="tmcsocialplugin/socialview" template="tmcsocialplugin/socialview.phtml" name="socialview"/>
+<block type="tmcsocialplugin/footer" name="tmc_js" template="tmcsocialplugin/footer.phtml"/></textarea>
+	Sample:
+	<textarea style='height:180px;border:0;'>
+<reference name="right">
+	<block type="tmcsocialplugin/socialview" template="tmcsocialplugin/socialview.phtml" name="socialview"/>
+	<block type="tmcsocialplugin/footer" name="tmc_js" template="tmcsocialplugin/footer.phtml"/>
+	<block type="catalog/product_compare_sidebar" before="cart_sidebar" name="catalog.compare.sidebar" template="catalog/product/compare/sidebar.phtml"/>
+	<block type="core/template" name="right.permanent.callout" template="callouts/right_col.phtml">
+		<action method="setImgSrc"><src>images/media/col_right_callout.jpg</src></action>
+		<action method="setImgAlt" translate="alt" module="catalog"><alt>Keep your eyes open for our special Back to School items and save A LOT!</alt></action>
+	</block>
+</reference>
+  </textarea></li>
+  <li>Search your <b>view.phtml</b> file (normaly in app/design/frontend/base/default/template/catalog/product/view.phtml)</li>
+  <li><b class='very_important'>Bakcup the file!</b> Put this line 
+  <textarea><?php echo $this->getLayout()->createBlock('core/template')->setTemplate('tmcsocialplugin/socialbutton.phtml')->toHtml(); ?></textarea> in line 84 (Normaly within the short description placeholder)
+  <textarea style='height:180px;border:0;'>
+&lt;?php if ($_product->getShortDescription()):?>
+	<div class="short-description">
+			<h2><?php echo $this->__('Quick Overview') ?></h2>
+			<div class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
+			 &lt;?php echo $this->getLayout()->createBlock('core/template')->setTemplate('tmcsocialplugin/socialbutton.phtml')->toHtml(); ?>
+	</div>
+&lt;?php endif;?>
+</textarea></li>
+   <li>Go to the FrontEnd and check one of your products, all the Social Buttons are placed. If doesn't, ask a Magento Professional. If the shop stop to work, you can easily recover from Backup files.</li>
+   <li><b class='very_important'>Switch on the Magento Cache</b></li>
+  </ul>
+ </body>
+</html>
+ 

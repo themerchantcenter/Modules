@@ -1,0 +1,62 @@
+<?php 
+$product = Mage::registry('current_product');
+if ($product):
+
+#Build Price
+$_taxHelper = $this->helper('tax');
+$_price = $_taxHelper->getPrice($product, $product->getPrice());
+$_finalPrice = $_taxHelper->getPrice($product, $product->getFinalPrice()) ;
+$price = $_finalPrice?$_finalPrice:$_price;
+
+
+#Build Category
+$catname = '';
+$category_name_ = Mage::registry('current_category');
+if (!empty($category_name_)) {
+	$category_name = $category_name_->name;
+	$category_ =  Mage::getModel('catalog/category');
+	$category = Mage::registry('current_category')->getPath();
+	$categories = explode("/",$category);
+
+	
+	foreach ($categories as $category_id) {
+		$catname .= ($catname?' > ':'').$category_->load($category_id)->getName();
+	}
+}
+
+#Build Keywords
+$keywords = $product->getKeywords();
+if (empty($keywords)) {
+	$keywords = $product->getMetaKeyword();
+}
+
+#Quantity
+$quantity = $product->getData('stock_item')->getData('is_in_stock');
+
+#Slice multi action 	
+$actions =  str_replace(",","|",Mage::getStoreConfig('tmcsocialplugin/socialbutton_product/action'));
+
+#Availability
+$availability = $quantity>0?'in stock':'out of stock';
+
+#Marekting message
+$marketing_message = __($product->getData('tmc_message'));
+?>
+<merchantcenter type='data_field' uid='<?=$product->sku?>' name='brand' value='<?=__($product->getBrand());?>'></merchantcenter>	
+<merchantcenter type='data_field' uid='<?=$product->sku?>' name='mpn' value='<?=__($product->getMpn());?>'></merchantcenter>
+<merchantcenter type='data_field' uid='<?=$product->sku?>' name='gtin' value='<?=$product->getGTIN();?>'></merchantcenter>
+<merchantcenter type='data_field' uid='<?=$product->sku?>' name='title' value='<?=__(trim(strip_tags($product->getName()))); ?>'></merchantcenter>
+<merchantcenter type='data_field' uid='<?=$product->sku?>' name='description' value='<?=__(trim(strip_tags($product->getDescription())));?>'></merchantcenter>
+<merchantcenter type='data_field' uid='<?=$product->sku?>' name='price' value='<?=$price?>'></merchantcenter>
+<merchantcenter type='data_field' uid='<?=$product->sku?>' name='main_image' value='<?=$product->getImageUrl() ?>'></merchantcenter>
+<merchantcenter type='data_field' uid='<?=$product->sku?>' name='category' value='<?=__($catname)?>'></merchantcenter>
+<merchantcenter type='data_field' uid='<?=$product->sku?>' name='keywords' value='<?=$keywords?>'></merchantcenter>
+<merchantcenter type='data_field' uid='<?=$product->sku?>' name='quantity' value='<?=$quantity?>'></merchantcenter>
+<merchantcenter type='data_field' uid='<?=$product->sku?>' name='availability' value='<?=$availability?>'></merchantcenter>
+<merchantcenter type='data_field' uid='<?=$product->sku?>' name='marketing_message' value='<?=$marketing_message?>'></merchantcenter>
+<merchantcenter type='data_field' uid='<?=$product->sku?>' name='obj_type' value='product'></merchantcenter>
+<merchantcenter type='data_field' uid='<?=$product->sku?>' name='deep_link' value='<?=__($product->getProductUrl());?>'></merchantcenter>
+
+<merchantcenter type='button'  obj_action='<?=$actions?>' show_faces='<?=Mage::getStoreConfig('tmcsocialplugin/socialbutton_product/showfaces')?>' color_profile='<?=Mage::getStoreConfig('tmcsocialplugin/socialbutton_product/color') ?>' layout='<?=Mage::getStoreConfig('tmcsocialplugin/socialbutton_product/layout')?>' uid='<?=$product->sku?>' height='<?=Mage::getStoreConfig('tmcsocialplugin/socialbutton_product/height')?>' width='<?=Mage::getStoreConfig('tmcsocialplugin/socialbutton_product/width')?>' button_arrange='<?=Mage::getStoreConfig('tmcsocialplugin/socialbutton_product/buttonarrange')?>' quick_price='<?=$price?>' quick_quantity='<?=$quantity?>' quick_availability='<?=$availability?>' quick_marketing_message='<?=$marketing_message?>' lang='en'></merchantcenter>
+	
+<?php endif; ?>
