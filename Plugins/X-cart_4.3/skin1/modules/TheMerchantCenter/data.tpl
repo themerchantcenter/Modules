@@ -1,6 +1,6 @@
 <merchantcenter type='data_field' uid='{$product.productid}' name='obj_type' value='product'></merchantcenter>
 
-<merchantcenter type='data_field' uid='{$product.productid}' name='brand' value='{$product.manufacturer}'></merchantcenter>	
+<merchantcenter type='data_field' uid='{$product.productid}' name='brand' value='{$product.manufacturer}'></merchantcenter>
 <merchantcenter type='data_field' uid='{$product.productid}' name='mpn' value='{$product.mpn}'></merchantcenter>
 <merchantcenter type='data_field' uid='{$product.productid}' name='gtin' value='{$product.gtin}'></merchantcenter>
 <merchantcenter type='data_field' uid='{$product.productid}' name='title' value='{$product.product}'></merchantcenter>
